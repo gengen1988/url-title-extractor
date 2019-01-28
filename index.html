@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>URL title extractor</h1>
+    <div>
+      <form onsubmit="extract(event, url.value)">
+        <label>URL:</label>
+        <input type="text" name="url" placeholder="http://...">
+        <button type="submit">extract</button>
+      </form>
+    </div>
+    <h2>Regular URL</h2>
+    <p id="regularUrl"></p>
+    <h2>Title</h2>
+    <p id="result"></p>
+
+    <script>
+    const axios = require('axios')
+    const cheerio = require('cheerio')
+
+    async function extract(evt, url) {
+      evt.preventDefault()
+      if (url.indexOf('http://') != 0 && url.indexOf('https://') != 0) {
+        url = 'http://' + url
+      }
+      result.innerHTML = 'extracting...'
+      try {
+        const doc = await axios.get(url)
+        const $ = cheerio.load(doc.data)
+        regularUrl.innerHTML = doc.request.responseURL
+        result.innerHTML = $('head > title').text()
+      } catch (err) {
+        result.innerHTML = err.toString()
+      }
+    }
+    </script>
+  </body>
+</html>
