@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "electron .",
-    "package": "electron-packager . url-title-extractor --out=build"
+    "package": "electron-packager . --out=build"
   },
   "keywords": [],
   "author": "",
